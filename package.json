@@ -1,0 +1,20 @@
+{
+  "name": "webgpu-samples",
+  "version": "0.1.0",
+  "author": "xjGafi",
+  "description": "webgpu vite template & samples",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xjGafi/webgpu-samples.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@webgpu/types": "^0.1.13",
+    "typescript": "^4.5.4",
+    "vite": "^2.8.0"
+  }
+}
