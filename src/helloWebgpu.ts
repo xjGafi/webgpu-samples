@@ -1,5 +1,5 @@
 // check webgpu support
-async function initWebGPU() {
+async function helloWebGPU() {
   try {
     // GPU
     const { gpu } = navigator
@@ -26,7 +26,7 @@ async function initWebGPU() {
     if (!device) {
       throw new Error("No device found");
     }
-    // console.log('🌈 device:', device);
+    console.log('🌈 device:', device);
     document.body.innerHTML += "<h2>👀 device</h2>"
 
     // let y: keyof GPUSupportedLimits;
@@ -40,4 +40,4 @@ async function initWebGPU() {
   }
 }
 
-initWebGPU()
+helloWebGPU()

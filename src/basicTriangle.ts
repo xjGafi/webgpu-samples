@@ -1,32 +1,47 @@
 import triangleVert from './shaders/triangle.vert.wgsl?raw'
 import redFrag from './shaders/red.frag.wgsl?raw'
 
-// initialize webgpu device & config canvas context
+// check webgpu support
 async function initWebGPU(canvas: HTMLCanvasElement) {
-  if (!navigator.gpu)
-    throw new Error('Not Support WebGPU')
-  const adapter = await navigator.gpu.requestAdapter({
+  // GPU
+  const { gpu } = navigator
+  if (!gpu) {
+    throw new Error("No Support WebGPU");
+  }
+
+  // 适配器
+  const adapter = await gpu.requestAdapter({
     powerPreference: 'high-performance'
-    // powerPreference: 'low-power'
   })
-  if (!adapter)
-    throw new Error('No Adapter Found')
-  const device = await adapter.requestDevice()
-  const context = canvas.getContext('webgpu') as GPUCanvasContext
-  const format = context.getPreferredFormat(adapter)
-  const devicePixelRatio = window.devicePixelRatio || 1
+  if (!adapter) {
+    throw new Error("No Adapter Found");
+  }
+  console.log('🌈 adapter:', adapter);
+
+  // 设备
+  const device = await adapter.requestDevice();
+  if (!device) {
+    throw new Error("No Device Found");
+  }
+  console.log('🌈 device:', device);
+
+  // 画布
+  const context = canvas.getContext('webgpu') as GPUCanvasContext;
+  const format = context.getPreferredFormat(adapter);
+  const devicePixelRatio = window.devicePixelRatio || 1;
   const size = [
     canvas.clientWidth * devicePixelRatio,
     canvas.clientHeight * devicePixelRatio
-  ]
+  ];
   context.configure({
-    // json specific format when key and value are the same
     device, format, size,
     // prevent chrome warning
     compositingAlphaMode: 'opaque'
-  })
-  return { device, context, format, size }
+  });
+
+  return { device, context, format, size };
 }
+
 // create a simple pipiline
 async function initPipeline(device: GPUDevice, format: GPUTextureFormat): Promise<GPURenderPipeline> {
   const descriptor: GPURenderPipelineDescriptor = {
@@ -44,18 +59,14 @@ async function initPipeline(device: GPUDevice, format: GPUTextureFormat): Promis
         code: redFrag
       }),
       entryPoint: 'main',
-      targets: [
-        {
-          format: format
-        }
-      ]
+      targets: [{ format }]
     }
   }
   return await device.createRenderPipelineAsync(descriptor)
 }
+
 // create & submit device commands
 function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderPipeline) {
-  const commandEncoder = device.createCommandEncoder()
   const view = context.getCurrentTexture().createView()
   const renderPassDescriptor: GPURenderPassDescriptor = {
     colorAttachments: [
@@ -69,6 +80,8 @@ function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderP
       }
     ]
   }
+
+  const commandEncoder = device.createCommandEncoder()
   const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor)
   passEncoder.setPipeline(pipeline)
   // 3 vertex form a triangle
@@ -79,13 +92,23 @@ function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderP
   device.queue.submit([commandEncoder.finish()])
 }
 
-async function run() {
-  const canvas = document.querySelector('canvas')
-  if (!canvas)
-    throw new Error('No Canvas')
-  const { device, context, format } = await initWebGPU(canvas)
-  const pipeline = await initPipeline(device, format)
-  // start draw
-  draw(device, context, pipeline)
+async function main() {
+  try {
+    const canvas = document.querySelector('canvas')
+    if (!canvas) {
+      throw new Error('No Canvas Found');
+    }
+
+    const { device, context, format } = await initWebGPU(canvas);
+
+    const pipeline = await initPipeline(device, format)
+    // start draw
+    draw(device, context, pipeline)
+
+  } catch (error: any) {
+    console.error('🌈 error:', error);
+    document.body.innerHTML = `<h1>${error.message}</h1>`
+  }
 }
-run()
+
+main();
