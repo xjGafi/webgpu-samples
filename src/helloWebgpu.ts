@@ -1,43 +1,35 @@
-// check webgpu support
-async function helloWebGPU() {
+async function initWebGPU() {
+  // GPU
+  const { gpu } = navigator;
+  if (!gpu) {
+    throw new Error('No Support WebGPU');
+  }
+
+  // 适配器
+  const adapter = await gpu.requestAdapter({
+    powerPreference: 'high-performance'
+  })
+  if (!adapter) {
+    throw new Error('No Adapter Found');
+  }
+  console.log('🌈 adapter:', adapter);
+
+  // 设备
+  const device = await adapter.requestDevice();
+  if (!device) {
+    throw new Error('No Device Found');
+  }
+  console.log('🌈 device:', device);
+}
+
+async function main() {
   try {
-    // GPU
-    const { gpu } = navigator
-    if (!gpu) {
-      throw new Error("No support WebGPU");
-    }
-    document.body.innerHTML = "<h1>Hello WebGPU</h1>"
-
-    // 适配器
-    const adapter = await gpu.requestAdapter()
-    if (!adapter) {
-      throw new Error("No adapter found");
-    }
-    console.log('🌈 adapter:', adapter);
-    document.body.innerHTML += "<h2>👀 adapter</h2>"
-
-    // let x: keyof GPUSupportedLimits;
-    // for (x in adapter.limits) {
-    //   document.body.innerHTML += `<p>${x}:${adapter.limits[x]}</p>`
-    // }
-
-    // 设备
-    const device = await adapter.requestDevice();
-    if (!device) {
-      throw new Error("No device found");
-    }
-    console.log('🌈 device:', device);
-    document.body.innerHTML += "<h2>👀 device</h2>"
-
-    // let y: keyof GPUSupportedLimits;
-    // for (y in device.limits) {
-    //   document.body.innerHTML += `<p>${y}:${device.limits[y]}</p>`
-    // }
-
+    await initWebGPU();
+    document.body.innerHTML = '<h1>Hello WebGPU</h1>';
   } catch (error: any) {
-    document.body.innerHTML = `<h1>${error.message}</h1>`
     console.error('🌈 error:', error);
+    document.body.innerHTML = `<h1>${error.message}</h1>`;
   }
 }
 
-helloWebGPU()
+main();
