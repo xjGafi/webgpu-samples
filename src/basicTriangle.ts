@@ -2,7 +2,7 @@ import triangleVert from './shaders/triangle.vert.wgsl?raw'
 import redFrag from './shaders/red.frag.wgsl?raw'
 
 // check webgpu support
-async function initWebGPU(canvas: HTMLCanvasElement) {
+async function initWebGPU(canvasId: String) {
   // GPU
   const { gpu } = navigator
   if (!gpu) {
@@ -26,6 +26,10 @@ async function initWebGPU(canvas: HTMLCanvasElement) {
   console.log('🌈 device:', device);
 
   // 画布
+  const canvas = document.querySelector(`#${canvasId}`) as HTMLCanvasElement
+  if (!canvas) {
+    throw new Error('No Canvas Found');
+  }
   const context = canvas.getContext('webgpu') as GPUCanvasContext;
   const format = context.getPreferredFormat(adapter);
   const devicePixelRatio = window.devicePixelRatio || 1;
@@ -94,12 +98,7 @@ function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderP
 
 async function main() {
   try {
-    const canvas = document.querySelector('canvas')
-    if (!canvas) {
-      throw new Error('No Canvas Found');
-    }
-
-    const { device, context, format } = await initWebGPU(canvas);
+    const { device, context, format } = await initWebGPU('basicTriganle');
 
     const pipeline = await initPipeline(device, format)
     // start draw
