@@ -15,10 +15,10 @@ app.innerHTML = `
   <canvas id="sketchpad"></canvas>
 `
 
-const $router = new Router();
+const router = new Router();
 
-$router.route('/one', () => import("./one"));
-$router.route('/two', () => import("./two"));
-$router.route('/three', () => import("./three"));
-$router.route('/helloWebgpu', () => import("./components/helloWebgpu"));
-$router.route('/basicTriangle', () => import("./components/basicTriangle"));
+router.register('/one', () => import("./one"));
+router.register('/two', () => import("./two"));
+router.register('/three', () => import("./three"));
+router.register('/helloWebgpu', () => import("./components/helloWebgpu"));
+router.register('/basicTriangle', () => import("./components/basicTriangle"));
