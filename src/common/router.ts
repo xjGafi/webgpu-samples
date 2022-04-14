@@ -24,7 +24,6 @@ class Router {
 
     // 根据当前的 hash 值来调用相对应的回调函数
     if (this.currentPath !== '/') {
-      // this.loadScript(this.routes[this.currentPath]);
       this.routes[this.currentPath]();
     }
 
