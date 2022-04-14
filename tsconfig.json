@@ -13,7 +13,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "types": ["vite/client", "@webgpu/types"]
+    "removeComments": true,
+    "types": ["@webgpu/types"]
   },
   "include": ["src"]
 }
