@@ -1,15 +1,15 @@
-import modules from "./modules/index";
+import Router from "./common/router";
+import modules from "./menu";
 
-import { menus, routes } from "./common/tools";
+import { getMenus, drawTextMessage, githubRepo } from "./common/tools";
 
-const app = document.querySelector<HTMLDivElement>('#app')!;
-app.innerHTML = `
-  <h1>Hello Vite!</h1>
-  <ul id="router">
-    ${menus(modules)}
-  </ul>
-  <div class="content"></div>
-  <canvas id="sketchpad"></canvas>
-`
+document.querySelector<HTMLLinkElement>("#githubRepoLink")!.href = githubRepo;
 
-routes(modules);
+// 注册路由并生成菜单
+const router = new Router('menus');
+const menu = document.querySelector('#menus') as HTMLUListElement;
+menu.innerHTML = getMenus(router, modules);
+
+// 全局消息绘制方法挂载到 window 上
+window.drawTextMessage = drawTextMessage;
+window.githubRepo = githubRepo;

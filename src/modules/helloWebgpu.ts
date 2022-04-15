@@ -12,26 +12,23 @@ async function initWebGPU() {
   if (!adapter) {
     throw new Error('No Adapter Found');
   }
-  console.log('🌈 adapter:', adapter);
+  // console.log('🌈 adapter:', adapter);
 
   // 设备
   const device = await adapter.requestDevice();
   if (!device) {
     throw new Error('No Device Found');
   }
-  console.log('🌈 device:', device);
+  // console.log('🌈 device:', device);
 }
 
 async function main() {
-
-  let sketchpad = document.querySelector<HTMLDivElement>('.content')!;
-
   try {
     await initWebGPU();
-    sketchpad.innerHTML = `<h1>Hello WebGPU</h1>`;
+    window.drawTextMessage('Hello WebGPU');
   } catch (error: any) {
     console.error('🌈 error:', error);
-    sketchpad.innerHTML = `<h1>${error.message}</h1>`;
+    window.drawTextMessage(error.message);
   }
 }
 

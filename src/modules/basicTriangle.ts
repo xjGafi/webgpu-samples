@@ -2,7 +2,7 @@ import triangleVert from '../shaders/triangle.vert.wgsl?raw'
 import redFrag from '../shaders/red.frag.wgsl?raw'
 
 // check webgpu support
-async function initWebGPU(canvasId: String) {
+async function initWebGPU(canvas: HTMLCanvasElement) {
   // GPU
   const { gpu } = navigator
   if (!gpu) {
@@ -26,7 +26,6 @@ async function initWebGPU(canvasId: String) {
   console.log('🌈 device:', device);
 
   // 画布
-  const canvas = document.querySelector(`#${canvasId}`) as HTMLCanvasElement
   if (!canvas) {
     throw new Error('No Canvas Found');
   }
@@ -97,21 +96,19 @@ function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderP
 }
 
 async function main() {
-  let sketchpad = document.querySelector<HTMLDivElement>('.content')!;
-
   try {
-    const { device, context, format } = await initWebGPU('basicTriganle');
+    // 初始化
+    const canvas = document.querySelector<HTMLCanvasElement>('#sketchpad')!;
+    const { device, context, format } = await initWebGPU(canvas);
 
+    // 配置管线
     const pipeline = await initPipeline(device, format)
-    // start draw
+
+    // 绘制
     draw(device, context, pipeline)
-
-    sketchpad.innerHTML = `<h2>Hello</h2>`;
-
-
   } catch (error: any) {
     console.error('🌈 error:', error);
-    document.body.innerHTML = `<h2>${error.message}</h2>`
+    window.drawTextMessage(error.message);
   }
 }
 

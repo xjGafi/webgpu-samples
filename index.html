@@ -4,107 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Webgpu Samples</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-      }
-      .hidden {
-        position: absolute;
-        width: 0;
-        height: 0;
-        overflow: hidden
-      }
-      .menu {
-        width: 200px;
-        height: 100%;
-        overflow: auto;
-        padding: 0 10px;
-      }
-      .menu > a {
-        display: block;
-        margin: 5px 0;
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      a.active {
-        color: red;
-      }
-      a > svg {
-        height: 32px;
-        width: 32px;
-      }
-      a > svg:hover {
-        transform: rotateY(180deg);
-      }
-      iframe {
-        flex-grow: 1;
-        border: none;
-      }
-      .github {
-        position: fixed;
-        right: 10px;
-        bottom: 10px;
-        height: 32px;
-        width: 32px;
-      }
-    </style>
+    <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
-    <!-- <svg class="hidden">
+    <svg class="hidden">
       <symbol id="github" viewBox="0 0 16 16">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+        <path
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+        />
       </symbol>
     </svg>
-    <main class="menu">
-      <h3>WebGPU Samples</h3>
-      <a href="https://github.com/xjGafi/webgpu-samples" target="_blank">
-        <svg fill="#000">
-          <use xlink:href="#github"></use>
-        </svg>
-      </a>
-      <hr />
-      <a class="sample active" target="helloWebgpu">Hello WebGPU</a>
-      <a class="sample" target="basicTriangle">Basic Triangle</a>
-      <a class="sample" target="colorTriangle">Color Triangle</a>
+    <main class="webgpu--container">
+      <aside class="webgpu--aside">
+        <section class="webgpu--aside__header">
+          <h1>WebGPU</h1>
+          <a id="githubRepoLink" target="_blank">
+            <svg fill="#000">
+              <use xlink:href="#github"></use>
+            </svg>
+          </a>
+        </section>
+        <ul id="menus" class="webgpu--aside__menus"></ul>
+        <p class="webgpu--aside__footer">have fun 🏝</p>
+      </aside>
+      <article class="webgpu--article">
+        <canvas id="sketchpad" class="webgpu--article__sketchpad"></canvas>
+        <a
+          id="githubRepoFileLink"
+          class="webgpu--article__github"
+          target="_blank"
+        >
+          <svg fill="#fff">
+            <use xlink:href="#github"></use>
+          </svg>
+        </a>
+      </article>
     </main>
-    <iframe></iframe>
-    <a class="github" target="_blank">
-      <svg fill="#fff">
-        <use xlink:href="#github"></use>
-      </svg>
-    </a> -->
-    <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
-    <!-- <script>
-      const iframe = document.querySelector('iframe');
-      const openInGithub = document.querySelector('.github');
-      const samples = document.querySelectorAll('.sample');
-      for (let sample of samples) {
-        sample.addEventListener('click', () => {
-          window.location.href = '/#' + sample.target;
-          iframe.src = '/samples/' + sample.target + '.html';
-          openInGithub.href =
-            'https://github.com/xjGafi/webgpu-samples/blob/master/src/' +
-            sample.target +
-            '.ts';
-          document.querySelector('.active').classList.remove('active');
-          sample.classList.add('active');
-        });
-      }
-
-      if (window.location.hash) {
-        document.querySelector(`[target=${window.location.hash.slice(1)}]`).click();
-      } else {
-        document.querySelector('.sample.active').click();
-      }
-    </script> -->
   </body>
 </html>

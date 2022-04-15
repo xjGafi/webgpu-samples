@@ -129,26 +129,36 @@ function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderP
   device.queue.submit([commandEncoder.finish()])
 }
 
-export default async function main() {
-  const canvas = document.querySelector('canvas')
-  if (!canvas)
-    throw new Error('No Canvas')
-  const { device, context, format } = await initWebGPU(canvas)
-  const { pipeline, uniformGroup, colorBuffer, vertexBuffer } = await initPipeline(device, format)
-  // first draw
-  draw(device, context, pipeline, uniformGroup, vertexBuffer)
-  // update draw if color changed
-  document.querySelector('input')?.addEventListener('input', (e: Event) => {
-    // get hex color string
-    const color = (e.target as HTMLInputElement).value
-    console.log(color)
-    // parse hex color into rgb
-    const r = +('0x' + color.slice(1, 3))
-    const g = +('0x' + color.slice(3, 5))
-    const b = +('0x' + color.slice(5, 7))
-    // update colorBuffer with new rgba color
-    device.queue.writeBuffer(colorBuffer, 0, new Float32Array([r / 255, g / 255, b / 255, 1]))
-    // re-draw
+async function main() {
+
+  try {
+    // 初始化
+    const canvas = document.querySelector<HTMLCanvasElement>('#sketchpad')!;
+    const { device, context, format } = await initWebGPU(canvas)
+
+    // 配置管线
+    const { pipeline, uniformGroup, colorBuffer, vertexBuffer } = await initPipeline(device, format)
+
+    // 绘制
     draw(device, context, pipeline, uniformGroup, vertexBuffer)
-  })
+    // // update draw if color changed
+    // document.querySelector('input')?.addEventListener('input', (e: Event) => {
+    //   // get hex color string
+    //   const color = (e.target as HTMLInputElement).value
+    //   console.log(color)
+    //   // parse hex color into rgb
+    //   const r = +('0x' + color.slice(1, 3))
+    //   const g = +('0x' + color.slice(3, 5))
+    //   const b = +('0x' + color.slice(5, 7))
+    //   // update colorBuffer with new rgba color
+    //   device.queue.writeBuffer(colorBuffer, 0, new Float32Array([r / 255, g / 255, b / 255, 1]))
+    //   // re-draw
+    //   draw(device, context, pipeline, uniformGroup, vertexBuffer)
+    // })
+  } catch (error: any) {
+    console.error('🌈 error:', error);
+    window.drawTextMessage(error.message);
+  }
 }
+
+export default main;
