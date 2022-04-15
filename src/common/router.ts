@@ -1,10 +1,13 @@
 import { RouterObject } from "./interface";
+import { isFunction } from "./tools";
 
 //构造函数
 class Router {
   routers = {} as RouterObject;
   currentPath = '';
-  menusId = ''
+  menusId = '';
+  beforeHandler = Object.create(Function);
+  afterHandler = Object.create(Function);
 
   constructor(menusId: string) {
     this.menusId = menusId;
@@ -27,30 +30,38 @@ class Router {
   }
 
   listenLoad() {
+    // 首次加载
     this.assign.call(this, location.pathname);
 
+    // 监听菜单点击事件
     const menus = document.querySelector(`#${this.menusId}`) as HTMLUListElement;
     menus.addEventListener(
       'click',
       (event: MouseEvent) => {
-        // 切换路由
-        const { dataset: { path } } = event.target as any;
+        const path = `/${(event.target as Element).id}`;
+
+        // 处理误触
+        if (path.slice(1) === this.menusId) {
+          return;
+        }
 
         this.currentPath = location.pathname;
         if (this.currentPath === path) return;
 
         event.preventDefault();
         this.assign.call(this, path);
-
-        this.pathChange.call(this, path, event.target)
       },
       false
     );
   }
 
-  // 用于注册每个视图
-  register(path: string, callback = function () { }) {
-    this.routers[path] = callback;
+  // 注册每个视图
+  register(path: string, callback: Function) {
+    if (isFunction(callback)) {
+      this.routers[path] = callback;
+    } else {
+      console.error('register(): callback is not a function');
+    }
   }
 
   // 跳转到 path
@@ -67,37 +78,42 @@ class Router {
 
   // 通用处理 path 调用回调函数
   refresh(path: string) {
-    let handler;
-    if (!this.routers.hasOwnProperty(path)) {
-      // 没有对应 path
-      handler = this.routers['404'] || function () { };
-    } else {
-      // 有对应 path
-      handler = this.routers[path];
-    }
-
     try {
-      handler.call(this);
+      let refreshHandler;
+      const hasOwnProperty = this.routers.hasOwnProperty(path);
+
+      if (hasOwnProperty) {
+        // 有对应 path
+        refreshHandler = this.routers[path];
+      } else {
+        // 没有对应 path
+        refreshHandler = this.routers['404'];
+      }
+
+      refreshHandler.call(this);
+      hasOwnProperty && this.afterHandler();
     } catch (error) {
       console.error('🤯', error);
       (this.routers['error'] || function () { }).call(this, error);
     }
   }
 
-  /* TODO(Vincent) 🔫 : 提取出去 2022/04/15 19:48:17 */
-  pathChange(path: string, target: any) {
-    // 动态设置 a 标签 href
-    const githubRepoFile = path === '/'
-      ? window.githubRepo
-      : `${window.githubRepo}/blob/master/src${path}.ts`;
-    document.querySelector<HTMLLinkElement>("#githubRepoFileLink")!.href = githubRepoFile;
+  // path 切换之前
+  beforeEach(callback: Function) {
+    if (isFunction(callback)) {
+      this.beforeHandler = callback;
+    } else {
+      console.error('beforeEach(): callback is not a function');
+    }
+  }
 
-    // 更新菜单样式
-    const currentMenu = document.querySelector('.actived') as HTMLLIElement;
-    const newMenu = target.classList;
-
-    currentMenu && currentMenu.classList.remove('actived');
-    newMenu.add('actived');
+  // path 切换之后
+  afterEach(callback: Function) {
+    if (isFunction(callback)) {
+      this.afterHandler = callback;
+    } else {
+      console.error('afterEach(): callback is not a function');
+    }
   }
 }
 

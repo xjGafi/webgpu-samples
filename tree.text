@@ -1,28 +1,11 @@
-# webgpu-samples
-
-## Install and Run
-
-Type the following in any terminal:
-
-```bash
-# Clone the repo
-git clone https://github.com/xjGafi/webgpu-samples.git
-
-# Go inside the folder
-cd webgpu-samples
-
-# Start installing dependencies
-npm install #or yarn
-
-# Run project at localhost:3000
-npm run dev #or yarn run dev
-```
-
-## Project Layout
-
-```bash
+.
 ├── LICENSE
 ├── README.md
+├── dist
+│   ├── assets
+│   │   ├── index.04532ca7.js
+│   │   └── index.f2b11eab.css
+│   └── index.html
 ├── index.css
 ├── index.html
 ├── package.json
@@ -49,14 +32,9 @@ npm run dev #or yarn run dev
 │   │   ├── ractangle.ts
 │   │   └── triangle.ts
 │   └── vite-env.d.ts
+├── tree.text
 ├── tsconfig.json
-└── vite.config.js
-```
+├── vite.config.js
+└── yarn.lock
 
-## How to enable WebGPU
-
-1. We have embedded a WebGPU Origin-Trail token in `tsconfig.json`, you can use WebGPU at `localhost:3000` via Chrome v94-105
-2. For Edge Canary, please open `edge://flags/#enable-unsafe-webgpu`, and enable the flag
-3. For FireFox Nightly, please open `about:config`, and change `dom.webgpu.enabled` to `true`
-
-Forked from [orillusion-webgpu-samples](https://github.com/Orillusion/orillusion-webgpu-samples)
+7 directories, 30 files

@@ -141,20 +141,20 @@ async function main() {
 
     // 绘制
     draw(device, context, pipeline, uniformGroup, vertexBuffer)
-    // // update draw if color changed
-    // document.querySelector('input')?.addEventListener('input', (e: Event) => {
-    //   // get hex color string
-    //   const color = (e.target as HTMLInputElement).value
-    //   console.log(color)
-    //   // parse hex color into rgb
-    //   const r = +('0x' + color.slice(1, 3))
-    //   const g = +('0x' + color.slice(3, 5))
-    //   const b = +('0x' + color.slice(5, 7))
-    //   // update colorBuffer with new rgba color
-    //   device.queue.writeBuffer(colorBuffer, 0, new Float32Array([r / 255, g / 255, b / 255, 1]))
-    //   // re-draw
-    //   draw(device, context, pipeline, uniformGroup, vertexBuffer)
-    // })
+    // update draw if color changed
+    document.querySelector('input')?.addEventListener('input', (e: Event) => {
+      // get hex color string
+      const color = (e.target as HTMLInputElement).value
+      console.log(color)
+      // parse hex color into rgb
+      const r = +('0x' + color.slice(1, 3))
+      const g = +('0x' + color.slice(3, 5))
+      const b = +('0x' + color.slice(5, 7))
+      // update colorBuffer with new rgba color
+      device.queue.writeBuffer(colorBuffer, 0, new Float32Array([r / 255, g / 255, b / 255, 1]))
+      // re-draw
+      draw(device, context, pipeline, uniformGroup, vertexBuffer)
+    })
   } catch (error: any) {
     console.error('🌈 error:', error);
     window.drawTextMessage(error.message);

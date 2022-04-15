@@ -1,7 +1,7 @@
 {
   "name": "webgpu-samples",
   "version": "0.1.0",
-  "author": "xjGafi",
+  "author": "Vincent",
   "description": "webgpu vite template & samples",
   "repository": {
     "type": "git",

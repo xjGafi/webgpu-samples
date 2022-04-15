@@ -15,12 +15,12 @@ body {
   overflow: hidden;
 }
 
-a > svg {
+a[data-tag='github'] > svg {
   height: 32px;
   width: 32px;
   cursor: pointer;
 }
-a > svg:hover {
+a[data-tag='github'] > svg:hover {
   transform: rotateY(180deg);
 }
 
@@ -32,6 +32,7 @@ a > svg:hover {
 
 /* aside */
 .webgpu--aside {
+  position: relative;
   min-width: 200px;
   height: 100%;
   padding: 0 20px;
@@ -56,19 +57,29 @@ a > svg:hover {
 
 .webgpu--aside__menus > li {
   cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 20px;
+  text-align: center;
+  background: #eee;
 }
 
-.webgpu--aside__menus > li:hover,
+.webgpu--aside__menus > li:hover {
+  background: #e0e0e0;
+}
+
 .webgpu--aside__menus > li.actived {
-  color: red;
+  color: #fff;
+  background: #000;
 }
 
 .webgpu--aside__footer {
-  position: fixed;
-  left: 20px;
+  position: absolute;
+  left: 0;
   bottom: 0;
   color: #999;
   font-size: 12px;
+  text-align: center;
+  width: 100%;
 }
 
 /* article */
@@ -89,7 +100,7 @@ a > svg:hover {
 }
 
 .webgpu--article__github {
-  position: fixed;
+  position: absolute;
   right: 10px;
   bottom: 10px;
   height: 32px;
