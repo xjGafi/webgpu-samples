@@ -96,7 +96,7 @@ function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderP
   device.queue.submit([commandEncoder.finish()])
 }
 
-export default async function main() {
+async function main() {
   let sketchpad = document.querySelector<HTMLDivElement>('.content')!;
 
   try {
@@ -115,4 +115,4 @@ export default async function main() {
   }
 }
 
-main();
+export default main;

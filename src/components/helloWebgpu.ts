@@ -22,7 +22,7 @@ async function initWebGPU() {
   console.log('🌈 device:', device);
 }
 
-export default async function main() {
+async function main() {
 
   let sketchpad = document.querySelector<HTMLDivElement>('.content')!;
 
@@ -35,4 +35,4 @@ export default async function main() {
   }
 }
 
-main();
+export default main;

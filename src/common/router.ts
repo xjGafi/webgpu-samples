@@ -11,22 +11,6 @@ class Router {
     this.init();
   }
 
-  // register(path: string, callback: Function) {
-  //   // 给不同的 hash 设置不同的回调函数
-  //   this.routers[path] = callback || function () { };
-  //   console.log('🌈 this.routers:', this.routers);
-  // }
-
-  // refresh() {
-  //   // 如果存在 hash 值则获取到，否则设置 hash 值为 /
-  //   this.currentPath = location.hash.slice(1) || '';
-
-  //   // 根据当前的 hash 值来调用相对应的回调函数
-  //   if (this.currentPath !== '/') {
-  //     this.routers[this.currentPath]();
-  //   }
-  // }
-
   init() {
     window.addEventListener(
       'load',
@@ -66,11 +50,13 @@ class Router {
   // 用于注册每个视图
   register(path: string, callback = function () { }) {
     this.routers[path] = callback;
+
+    // console.log('🌈 this.routers[path]:', this.routers[path]);
   }
 
   // 跳转到 path
   assign(path: string) {
-    console.log('🌈 assign path:', path);
+    // console.log('🌈 assign path:', path);
 
     history.pushState({ path }, '', path);
     this.refresh(path);
@@ -78,7 +64,7 @@ class Router {
 
   // 替换为 path
   replace(path: string) {
-    console.log('🌈 replace path:', path);
+    // console.log('🌈 replace path:', path);
 
     history.replaceState({ path }, '', path);
     this.refresh(path);
@@ -86,7 +72,7 @@ class Router {
 
   // 通用处理 path 调用回调函数
   refresh(path: string) {
-    console.log('🌈 refresh path:', path);
+    // console.log('🌈 refresh path:', path);
 
     let handler;
     // 没有对应 path
@@ -98,7 +84,7 @@ class Router {
       handler = this.routers[path];
     }
 
-    console.log('🌈 handler:', handler);
+    // console.log('🌈 handler:', handler);
 
     try {
       handler.call(this);
@@ -106,9 +92,7 @@ class Router {
       console.error('🤯', error);
       (this.routers['error'] || function () { }).call(this, error);
     }
-
   }
-
 }
 
 export default Router;

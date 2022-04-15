@@ -1,5 +1,11 @@
 import Router from "./common/router";
 
+import one from "./one";
+import two from "./two";
+import three from "./three";
+import helloWebgpu from "./components/helloWebgpu";
+import basicTriangle from "./components/basicTriangle";
+
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
 app.innerHTML = `
@@ -17,9 +23,9 @@ app.innerHTML = `
 
 const router = new Router();
 
-router.register('/', () => import("./one"));
-router.register('/one', () => import("./one"));
-router.register('/two', () => import("./two"));
-router.register('/three', () => import("./three"));
-router.register('/helloWebgpu', () => import("./components/helloWebgpu"));
-router.register('/basicTriangle', () => import("./components/basicTriangle"));
+router.register('/', one);
+router.register('/one', one);
+router.register('/two', two);
+router.register('/three', three);
+router.register('/helloWebgpu', helloWebgpu);
+router.register('/basicTriangle', basicTriangle);
