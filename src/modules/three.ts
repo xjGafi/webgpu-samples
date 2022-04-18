@@ -1,3 +1,3 @@
 export default function main() {
-  window.drawTextMessage('3. three');
+  window.$message('3. three');
 }

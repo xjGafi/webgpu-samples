@@ -1,6 +1,11 @@
 /// <reference types="vite/client" />
 
 declare interface Window {
-  drawTextMessage: any;
-  githubRepo: any;
+  $message: Function;
+}
+
+interface Menu {
+  name: string;
+  path: string;
+  callback: Function;
 }

@@ -1,16 +1,24 @@
-import { RouterObject } from "./interface";
-import { isFunction } from "./tools";
+interface Routers {
+  [key: string]: any
+}
+
+interface Router {
+  routers: Routers
+  currentPath: string
+  menusId: string
+  beforeHandler: Function | null
+  afterHandler: Function | null
+}
 
 //构造函数
 class Router {
-  routers = {} as RouterObject;
-  currentPath = '';
-  menusId = '';
-  beforeHandler = Object.create(Function);
-  afterHandler = Object.create(Function);
 
   constructor(menusId: string) {
+    this.routers = {}  // 保存注册的所有路由
+    this.currentPath = '';
     this.menusId = menusId;
+    this.beforeHandler = null  // 切换前
+    this.afterHandler = null  // 切换后
 
     this.init();
   }
@@ -57,7 +65,7 @@ class Router {
 
   // 注册每个视图
   register(path: string, callback: Function) {
-    if (isFunction(callback)) {
+    if (typeof callback === 'function') {
       this.routers[path] = callback;
     } else {
       console.error('register(): callback is not a function');
@@ -91,7 +99,7 @@ class Router {
       }
 
       refreshHandler.call(this);
-      hasOwnProperty && this.afterHandler();
+      hasOwnProperty && this.afterHandler && this.afterHandler();
     } catch (error) {
       console.error('🤯', error);
       (this.routers['error'] || function () { }).call(this, error);
@@ -100,7 +108,7 @@ class Router {
 
   // path 切换之前
   beforeEach(callback: Function) {
-    if (isFunction(callback)) {
+    if (typeof callback === 'function') {
       this.beforeHandler = callback;
     } else {
       console.error('beforeEach(): callback is not a function');
@@ -109,7 +117,7 @@ class Router {
 
   // path 切换之后
   afterEach(callback: Function) {
-    if (isFunction(callback)) {
+    if (typeof callback === 'function') {
       this.afterHandler = callback;
     } else {
       console.error('afterEach(): callback is not a function');

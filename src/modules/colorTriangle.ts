@@ -157,7 +157,7 @@ async function main() {
     })
   } catch (error: any) {
     console.error('🌈 error:', error);
-    window.drawTextMessage(error.message);
+    window.$message(error.message);
   }
 }
 

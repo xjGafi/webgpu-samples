@@ -108,7 +108,7 @@ async function main() {
     draw(device, context, pipeline)
   } catch (error: any) {
     console.error('🌈 error:', error);
-    window.drawTextMessage(error.message);
+    window.$message(error.message);
   }
 }
 

@@ -15,4 +15,4 @@ menu.innerHTML = getMenus(router, modules);
 router.afterEach(() => { handleRouteChange(GITHUB_REPO) });
 
 // 全局消息绘制方法挂载到 window 上
-window.drawTextMessage = drawTextMessage;
+window.$message = drawTextMessage;

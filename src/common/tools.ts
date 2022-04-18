@@ -1,15 +1,3 @@
-import { Menu } from "./interface";
-
-export const isFunction = (fn: Function) => {
-  const type = Object.prototype.toString.call(fn);
-
-  if (type === '[object Function]' || type === '[object AsyncFunction]') {
-    return true;
-  }
-
-  return false;
-}
-
 export const getMenus = (router: any, modules: Array<Menu>) => {
   let menus = '';
   modules.forEach(page => {
