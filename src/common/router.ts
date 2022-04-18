@@ -89,6 +89,7 @@ class Router {
     try {
       let refreshHandler;
       const hasOwnProperty = this.routers.hasOwnProperty(path);
+      hasOwnProperty && this.beforeHandler && this.beforeHandler();
 
       if (hasOwnProperty) {
         // 有对应 path

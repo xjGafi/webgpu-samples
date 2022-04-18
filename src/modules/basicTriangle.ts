@@ -2,11 +2,11 @@ import triangleVert from '../shaders/triangle.vert.wgsl?raw'
 import redFrag from '../shaders/red.frag.wgsl?raw'
 
 // check webgpu support
-async function initWebGPU(canvas: HTMLCanvasElement) {
+async function initWebGPU() {
   // GPU
   const { gpu } = navigator
   if (!gpu) {
-    throw new Error("No Support WebGPU");
+    throw new Error("Not Support WebGPU");
   }
 
   // 适配器
@@ -14,22 +14,25 @@ async function initWebGPU(canvas: HTMLCanvasElement) {
     powerPreference: 'high-performance'
   })
   if (!adapter) {
-    throw new Error("No Adapter Found");
+    throw new Error("Adapter Not Found");
   }
-  console.log('🌈 adapter:', adapter);
+  // console.log('🌈 adapter:', adapter);
 
   // 设备
   const device = await adapter.requestDevice();
   if (!device) {
-    throw new Error("No Device Found");
+    throw new Error("Device Not Found");
   }
-  console.log('🌈 device:', device);
+  // console.log('🌈 device:', device);
 
   // 画布
+  const canvas = document.querySelector<HTMLCanvasElement>('#sketchpad');
   if (!canvas) {
-    throw new Error('No Canvas Found');
+    throw new Error('Canvas Not Found');
   }
+  canvas.style.display = 'block';
   const context = canvas.getContext('webgpu') as GPUCanvasContext;
+
   const format = context.getPreferredFormat(adapter);
   const devicePixelRatio = window.devicePixelRatio || 1;
   const size = [
@@ -38,7 +41,6 @@ async function initWebGPU(canvas: HTMLCanvasElement) {
   ];
   context.configure({
     device, format, size,
-    // prevent chrome warning
     compositingAlphaMode: 'opaque'
   });
 
@@ -98,8 +100,7 @@ function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderP
 async function main() {
   try {
     // 初始化
-    const canvas = document.querySelector<HTMLCanvasElement>('#sketchpad')!;
-    const { device, context, format } = await initWebGPU(canvas);
+    const { device, context, format } = await initWebGPU();
 
     // 配置管线
     const pipeline = await initPipeline(device, format)

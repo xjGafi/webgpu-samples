@@ -3,30 +3,49 @@ import colorFrag from '../shaders/color.frag.wgsl?raw'
 import * as triangle from '../util/triangle'
 
 // initialize webgpu device & config canvas context
-async function initWebGPU(canvas: HTMLCanvasElement) {
-  if (!navigator.gpu)
-    throw new Error('Not Support WebGPU')
-  const adapter = await navigator.gpu.requestAdapter({
+async function initWebGPU() {
+  // GPU
+  const { gpu } = navigator
+  if (!gpu) {
+    throw new Error("Not Support WebGPU");
+  }
+
+  // 适配器
+  const adapter = await gpu.requestAdapter({
     powerPreference: 'high-performance'
-    // powerPreference: 'low-power'
   })
-  if (!adapter)
-    throw new Error('No Adapter Found')
-  const device = await adapter.requestDevice()
-  const context = canvas.getContext('webgpu') as GPUCanvasContext
-  const format = context.getPreferredFormat(adapter)
-  const devicePixelRatio = window.devicePixelRatio || 1
+  if (!adapter) {
+    throw new Error("Adapter Not Found");
+  }
+  // console.log('🌈 adapter:', adapter);
+
+  // 设备
+  const device = await adapter.requestDevice();
+  if (!device) {
+    throw new Error("Device Not Found");
+  }
+  // console.log('🌈 device:', device);
+
+  // 画布
+  const canvas = document.querySelector<HTMLCanvasElement>('#sketchpad');
+  if (!canvas) {
+    throw new Error('Canvas Not Found');
+  }
+  canvas.style.display = 'block';
+  const context = canvas.getContext('webgpu') as GPUCanvasContext;
+
+  const format = context.getPreferredFormat(adapter);
+  const devicePixelRatio = window.devicePixelRatio || 1;
   const size = [
     canvas.clientWidth * devicePixelRatio,
-    canvas.clientHeight * devicePixelRatio,
-  ]
+    canvas.clientHeight * devicePixelRatio
+  ];
   context.configure({
-    // json specific format when key and value are the same
     device, format, size,
-    // prevent chrome warning after v102
     compositingAlphaMode: 'opaque'
-  })
-  return { device, context, format, size }
+  });
+
+  return { device, context, format, size };
 }
 // create a simple pipiline
 async function initPipeline(device: GPUDevice, format: GPUTextureFormat) {
@@ -133,14 +152,14 @@ async function main() {
 
   try {
     // 初始化
-    const canvas = document.querySelector<HTMLCanvasElement>('#sketchpad')!;
-    const { device, context, format } = await initWebGPU(canvas)
+    const { device, context, format } = await initWebGPU();
 
     // 配置管线
-    const { pipeline, uniformGroup, colorBuffer, vertexBuffer } = await initPipeline(device, format)
+    const { pipeline, uniformGroup, colorBuffer, vertexBuffer } = await initPipeline(device, format);
 
     // 绘制
-    draw(device, context, pipeline, uniformGroup, vertexBuffer)
+    draw(device, context, pipeline, uniformGroup, vertexBuffer);
+
     // update draw if color changed
     document.querySelector('input')?.addEventListener('input', (e: Event) => {
       // get hex color string

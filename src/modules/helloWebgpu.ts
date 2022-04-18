@@ -2,22 +2,20 @@ async function initWebGPU() {
   // GPU
   const { gpu } = navigator;
   if (!gpu) {
-    throw new Error('No Support WebGPU');
+    throw new Error('Not Support WebGPU');
   }
 
   // 适配器
-  const adapter = await gpu.requestAdapter({
-    powerPreference: 'high-performance'
-  })
+  const adapter = await gpu.requestAdapter()
   if (!adapter) {
-    throw new Error('No Adapter Found');
+    throw new Error('Adapter Not Found');
   }
   // console.log('🌈 adapter:', adapter);
 
   // 设备
   const device = await adapter.requestDevice();
   if (!device) {
-    throw new Error('No Device Found');
+    throw new Error('Device Not Found');
   }
   // console.log('🌈 device:', device);
 }
