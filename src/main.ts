@@ -1,6 +1,4 @@
 import Router from "./common/router";
-import modules from "./menu";
-
 import { getMenus, handleChanged, showMessage } from "./common/tools";
 
 const GITHUB_REPO = 'https://github.com/xjGafi/webgpu-samples';
@@ -11,8 +9,35 @@ const menusId = 'menus';
 const router = new Router(menusId);
 
 // demo 页面菜单
-const menu = document.querySelector<HTMLUListElement>(`#${menusId}`)!;
-menu.innerHTML = getMenus(router, modules);
+const routes = [
+  {
+    path: '/',
+    name: '',
+    callback: () => import('./pages/home')
+  },
+  {
+    path: '/404',
+    name: '',
+    callback: () => import('./pages/error')
+  },
+  {
+    path: '/helloWebgpu',
+    name: 'Hello WebGPU',
+    callback: () => import('./pages/helloWebgpu')
+  },
+  {
+    path: '/basicTriangle',
+    name: 'Basic Triangle',
+    callback: () => import('./pages/basicTriangle')
+  },
+  {
+    path: '/colorTriangle',
+    name: 'Color Triangle',
+    callback: () => import('./pages/colorTriangle')
+  }
+];
+const menus = document.querySelector<HTMLUListElement>(`#${menusId}`)!;
+menus.innerHTML = getMenus(router, routes);
 
 // 路由更新后更新一些动态数据
 router.afterEach(() => { handleChanged(GITHUB_REPO) });

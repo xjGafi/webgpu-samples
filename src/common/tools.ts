@@ -1,13 +1,14 @@
 export const getMenus = (router: any, modules: Array<Menu>) => {
   let menus = '';
   modules.forEach(page => {
+    // 生成菜单
     const { name, path, callback } = page;
-
     if (name) {
       const menu = `<li id="${path.slice(1)}">${name}</li>`;
       menus += menu;
     }
 
+    // 注册路由
     router.register(path, callback);
   });
 
