@@ -1,6 +1,11 @@
 export const handleBeforeChange = () => {
+  // 隐藏消息
   const messageBox = document.querySelector<HTMLElement>('#message')!;
   messageBox.style.display = 'none';
+
+  // 清空控制器中元素
+  const controller = document.querySelector<HTMLElement>('#controller')!;
+  controller.innerHTML = '';
 }
 
 export const handleChanged = (githubRepo: string) => {

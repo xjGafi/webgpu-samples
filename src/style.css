@@ -108,11 +108,12 @@ a[data-tag='github'] > svg:hover {
   background: #000;
   width: 100%;
   height: 100%;
+  overflow: scroll;
 }
 
 .webgpu--article__sketchpad {
-  width: 100%;
-  height: 100%;
+  width: 600px;
+  height: 600px;
   z-index: 1;
 }
 
@@ -128,7 +129,7 @@ a[data-tag='github'] > svg:hover {
 }
 
 .webgpu--article__github {
-  position: absolute;
+  position: fixed;
   right: 10px;
   bottom: 10px;
   height: 32px;

@@ -164,7 +164,7 @@ async function main() {
     // 颜色选择器
     const inputColor = document.createElement("input");
     inputColor.type = 'color';
-    inputColor.value = '#fff';
+    inputColor.value = '#00ff00'; // 必须是 6 位
     controller.appendChild(inputColor);
 
     // update draw if color changed
