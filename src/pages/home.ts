@@ -52,7 +52,7 @@ export default function main() {
 
   window.$message(`
     <section>
-      <h2>Document</h2>
+      <h2>Documents:</h2>
       <ul>
         ${links.map(link => `<li><a href="${link.url}" target="_blank">${link.label}</a></li>`).join('')}
       </ul>

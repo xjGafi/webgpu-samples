@@ -15,11 +15,6 @@ body {
   overflow: hidden;
 }
 
-ul {
-  padding: 0;
-  list-style: none;
-}
-
 a {
   text-decoration: none;
   color: #fff;
@@ -64,6 +59,8 @@ a[data-tag='github'] > svg:hover {
 
 .webgpu--aside__menus {
   margin: 10px 0;
+  padding: 0;
+  list-style: none;
   display: flex;
   flex-direction: column;
   gap: 10px;
