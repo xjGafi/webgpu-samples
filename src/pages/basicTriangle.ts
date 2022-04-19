@@ -109,7 +109,7 @@ async function main() {
     draw(device, context, pipeline)
   } catch (error: any) {
     console.error('🌈 error:', error);
-    window.$message(error.message);
+    window.$message(`<h2>${error.message}</h2>`);
   }
 }
 

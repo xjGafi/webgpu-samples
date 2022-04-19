@@ -23,10 +23,10 @@ async function initWebGPU() {
 async function main() {
   try {
     await initWebGPU();
-    window.$message('Hello WebGPU');
+    window.$message('<h2>Hello WebGPU</h2>');
   } catch (error: any) {
     console.error('🌈 error:', error);
-    window.$message(error.message);
+    window.$message(`<h2>${error.message}</h2>`);
   }
 }
 

@@ -64,9 +64,9 @@ class Router {
   }
 
   // 注册每个视图
-  register(path: string, callback: Function) {
+  async register(path: string, callback: Function) {
     if (typeof callback === 'function') {
-      this.routers[path] = callback;
+      this.routers[path] = (await callback.call(this)).default;
     } else {
       console.error('register(): callback is not a function');
     }
@@ -84,29 +84,6 @@ class Router {
     this.refresh(path);
   }
 
-  // 通用处理 path 调用回调函数
-  refresh(path: string) {
-    try {
-      let refreshHandler;
-      const hasOwnProperty = this.routers.hasOwnProperty(path);
-      hasOwnProperty && this.beforeHandler && this.beforeHandler();
-
-      if (hasOwnProperty) {
-        // 有对应 path
-        refreshHandler = this.routers[path];
-      } else {
-        // 没有对应 path
-        refreshHandler = this.routers['404'];
-      }
-
-      refreshHandler.call(this);
-      hasOwnProperty && this.afterHandler && this.afterHandler();
-    } catch (error) {
-      console.error('🤯', error);
-      (this.routers['error'] || function () { }).call(this, error);
-    }
-  }
-
   // path 切换之前
   beforeEach(callback: Function) {
     if (typeof callback === 'function') {
@@ -122,6 +99,29 @@ class Router {
       this.afterHandler = callback;
     } else {
       console.error('afterEach(): callback is not a function');
+    }
+  }
+
+  // 通用处理 path 调用回调函数
+  refresh(path: string) {
+    try {
+      let refreshHandler;
+      const hasOwnProperty = this.routers.hasOwnProperty(path);
+      hasOwnProperty && this.beforeHandler && this.beforeHandler();
+
+      if (hasOwnProperty) {
+        // 有对应 path
+        refreshHandler = this.routers[path];
+      } else {
+        // 没有对应 path
+        refreshHandler = this.routers['/404'];
+      }
+
+      refreshHandler.call(this);
+      hasOwnProperty && this.afterHandler && this.afterHandler();
+    } catch (error) {
+      console.error('🤯', error);
+      (this.routers['error'] || function () { }).call(this, error);
     }
   }
 }

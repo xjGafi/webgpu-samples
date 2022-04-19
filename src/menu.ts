@@ -1,40 +1,28 @@
-import one from "./modules/one";
-import two from "./modules/two";
-import three from "./modules/three";
-import helloWebgpu from "./modules/helloWebgpu";
-import basicTriangle from "./modules/basicTriangle";
-import colorTriangle from "./modules/colorTriangle";
-
 const moudles = [
   {
-    path: '/one',
-    name: '一',
-    callback: one
+    path: '/',
+    name: '',
+    callback: () => import('./pages/home')
   },
   {
-    path: '/two',
-    name: '二',
-    callback: two
-  },
-  {
-    path: '/three',
-    name: '三',
-    callback: three
+    path: '/404',
+    name: '',
+    callback: () => import('./pages/error')
   },
   {
     path: '/helloWebgpu',
     name: 'Hello WebGPU',
-    callback: helloWebgpu
+    callback: () => import('./pages/helloWebgpu')
   },
   {
     path: '/basicTriangle',
     name: 'Basic Triangle',
-    callback: basicTriangle
+    callback: () => import('./pages/basicTriangle')
   },
   {
     path: '/colorTriangle',
     name: 'Color Triangle',
-    callback: colorTriangle
+    callback: () => import('./pages/colorTriangle')
   }
 ]
 

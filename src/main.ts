@@ -6,9 +6,12 @@ import { getMenus, handleChanged, showMessage } from "./common/tools";
 const GITHUB_REPO = 'https://github.com/xjGafi/webgpu-samples';
 document.querySelector<HTMLLinkElement>("#githubRepoLink")!.href = GITHUB_REPO;
 
-// 注册路由并生成菜单
-const router = new Router('menus');
-const menu = document.querySelector('#menus') as HTMLUListElement;
+// 注册路由
+const menusId = 'menus';
+const router = new Router(menusId);
+
+// demo 页面菜单
+const menu = document.querySelector<HTMLUListElement>(`#${menusId}`)!;
 menu.innerHTML = getMenus(router, modules);
 
 // 路由更新后更新一些动态数据

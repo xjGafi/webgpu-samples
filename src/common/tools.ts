@@ -1,12 +1,12 @@
 export const getMenus = (router: any, modules: Array<Menu>) => {
-  router.register('/', () => { showMessage('Have Fun ;-)') });
-  router.register('404', () => { showMessage('Page Not Found ;-(') });
-
   let menus = '';
   modules.forEach(page => {
     const { name, path, callback } = page;
-    const menu = `<li id="${path.slice(1)}">${name}</li>`;
-    menus += menu;
+
+    if (name) {
+      const menu = `<li id="${path.slice(1)}">${name}</li>`;
+      menus += menu;
+    }
 
     router.register(path, callback);
   });
@@ -28,8 +28,8 @@ export const handleChanged = (githubRepo: string) => {
   githubRepoFileLink.href = githubRepoFile;
 
   // 移除旧路由对应菜单 actived 样式
-  const menuActived = document.querySelector<HTMLLIElement>('.actived')
-  menuActived?.classList.remove('actived');
+  const oldMenu = document.querySelector<HTMLLIElement>('.actived')
+  oldMenu?.classList.remove('actived');
 
   // 设置新路由对应菜单 actived 样式
   if (pathname) {
@@ -45,5 +45,5 @@ export const showMessage = (message: string) => {
   // 显示消息
   const messageBox = document.querySelector<HTMLElement>('#message')!;
   messageBox.style.display = 'block';
-  messageBox.innerHTML = `<h1>${message}</h1>`
+  messageBox.innerHTML = message
 }
