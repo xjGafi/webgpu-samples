@@ -23,3 +23,7 @@ router.beforeEach(() => { handleBeforeChange() });
 
 // 路由更新后，更新 UI
 router.afterEach(() => { handleChanged(GITHUB_REPO) });
+
+// 返回首页
+const home = document.querySelector<HTMLElement>('#title');
+home?.addEventListener('click', () => router.assign('/'), false)

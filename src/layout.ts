@@ -13,7 +13,7 @@ const initLayout = (appId = 'app', githubRepo: string, routes: Array<Menu>) => {
   const layout = `
     <aside class="webgpu--aside">
       <section class="webgpu--aside__header">
-        <h1>WebGPU</h1>
+        <h1 id="title">WebGPU</h1>
         <a id="githubRepoLink" href="${githubRepo}" target="_blank" data-tag="github">
           <svg fill="#000">
             <use xlink:href="#github"></use>
@@ -26,6 +26,7 @@ const initLayout = (appId = 'app', githubRepo: string, routes: Array<Menu>) => {
     <article class="webgpu--article">
       <canvas id="sketchpad" class="webgpu--article__sketchpad"></canvas>
       <section id="message" class="webgpu--article__message"></section>
+      <section id="controller" class="webgpu--article__controller"></section>
       <a
         id="githubRepoFileLink"
         class="webgpu--article__github"

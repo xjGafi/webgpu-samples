@@ -57,6 +57,10 @@ a[data-tag='github'] > svg:hover {
   border-bottom: 1px solid #ccc;
 }
 
+.webgpu--aside__header > h1 {
+  cursor: pointer;
+}
+
 .webgpu--aside__menus {
   margin: 10px 0;
   padding: 0;
@@ -114,6 +118,13 @@ a[data-tag='github'] > svg:hover {
 
 .webgpu--article__message {
   position: absolute;
+}
+
+.webgpu--article__controller {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
 }
 
 .webgpu--article__github {

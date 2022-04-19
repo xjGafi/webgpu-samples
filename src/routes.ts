@@ -11,7 +11,7 @@ const routes = [
     callback: home
   },
   {
-    path: '/404',
+    path: '/error',
     name: '',
     callback: error
   },

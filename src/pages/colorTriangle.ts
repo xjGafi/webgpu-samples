@@ -160,11 +160,17 @@ async function main() {
     // 绘制
     draw(device, context, pipeline, uniformGroup, vertexBuffer);
 
+    const controller = document.querySelector<HTMLElement>('#controller')!;
+    // 颜色选择器
+    const inputColor = document.createElement("input");
+    inputColor.type = 'color';
+    inputColor.value = '#fff';
+    controller.appendChild(inputColor);
+
     // update draw if color changed
-    document.querySelector('input')?.addEventListener('input', (e: Event) => {
+    inputColor.addEventListener('input', (e: Event) => {
       // get hex color string
       const color = (e.target as HTMLInputElement).value
-      console.log(color)
       // parse hex color into rgb
       const r = +('0x' + color.slice(1, 3))
       const g = +('0x' + color.slice(3, 5))

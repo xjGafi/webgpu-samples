@@ -68,7 +68,7 @@ class Router {
     if (typeof callback === 'function') {
       this.routers[path] = callback;
     } else {
-      console.error('register(): callback is not a function');
+      console.error('🤯 register(): callback is not a function');
     }
   }
 
@@ -87,23 +87,23 @@ class Router {
   // 通用处理 path 调用回调函数
   refresh(path: string) {
     try {
-      let refreshHandler;
+      // 判断路由是否被注册
       const hasOwnProperty = this.routers.hasOwnProperty(path);
-      hasOwnProperty && this.beforeHandler && this.beforeHandler();
-
       if (hasOwnProperty) {
-        // 有对应 path
-        refreshHandler = this.routers[path];
-      } else {
-        // 没有对应 path
-        refreshHandler = this.routers['/404'];
-      }
+        // 路由的回调函数执行前触发
+        this.beforeHandler && this.beforeHandler();
 
-      refreshHandler.call(this);
-      hasOwnProperty && this.afterHandler && this.afterHandler();
+        // 执行路由的回调函数
+        this.routers[path].call(this);
+
+        // 路由的回调函数执行后触发
+        this.afterHandler && this.afterHandler();
+      } else {
+        throw new Error(`${path} is not registered.`);
+      }
     } catch (error) {
-      console.error('🤯', error);
-      (this.routers['error'] || function () { }).call(this, error);
+      console.error('🤯 refresh():', error);
+      this.routers['/error'].call(this);
     }
   }
 
@@ -112,7 +112,7 @@ class Router {
     if (typeof callback === 'function') {
       this.beforeHandler = callback;
     } else {
-      console.error('beforeEach(): callback is not a function');
+      console.error('🤯 beforeEach(): callback is not a function');
     }
   }
 
@@ -121,7 +121,7 @@ class Router {
     if (typeof callback === 'function') {
       this.afterHandler = callback;
     } else {
-      console.error('afterEach(): callback is not a function');
+      console.error('🤯 afterEach(): callback is not a function');
     }
   }
 }

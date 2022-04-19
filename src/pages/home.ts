@@ -1,35 +1,31 @@
 export default function main() {
   const links = [
     {
-      label: '🐙 GitHub - WebGPU: Wiki',
+      label: '⭐️ GitHub - WebGPU: Wiki',
       url: 'https://github.com/gpuweb/gpuweb/wiki/Implementation-Status',
     },
     {
-      label: '🐙 GitHub - WebGPU: Samples',
-      url: 'https://github.com/austinEng/webgpu-samples',
-    },
-    {
-      label: '📑 W3C - WebGPU',
+      label: '📖 W3C - WebGPU',
       url: 'https://www.w3.org/TR/webgpu/',
     },
     {
-      label: '📑 W3C - WebGPU (中文)',
+      label: '📖 W3C - WebGPU (中文)',
       url: 'https://www.orillusion.com/zh/webgpu.html',
     },
     {
-      label: '📑 W3C - WGSL',
+      label: '📖 W3C - WGSL',
       url: 'https://www.w3.org/TR/WGSL/',
     },
     {
-      label: '📑 W3C - WGSL (中文)',
+      label: '📖 W3C - WGSL (中文)',
       url: 'https://www.orillusion.com/zh/wgsl.html',
     },
     {
-      label: '📑 W3C - WebGPU Explainer',
+      label: '📖 W3C - WebGPU Explainer',
       url: 'https://gpuweb.github.io/gpuweb/explainer/',
     },
     {
-      label: '📑 W3C - WebGPU Explainer (中文)',
+      label: '📖 W3C - WebGPU Explainer (中文)',
       url: 'https://www.orillusion.com/zh/explainer.html',
     },
     {
@@ -37,7 +33,7 @@ export default function main() {
       url: 'https://space.bilibili.com/1006136755',
     },
     {
-      label: '🐙 GitHub - Orillusion: 代码',
+      label: '⭐️ GitHub - Orillusion: 代码',
       url: 'https://github.com/Orillusion/orillusion-webgpu-samples',
     },
     {
@@ -45,7 +41,7 @@ export default function main() {
       url: 'https://space.bilibili.com/1982541803',
     },
     {
-      label: '🐙 GitHub - Jack 老徐: 代码',
+      label: '⭐️ GitHub - Jack 老徐: 代码',
       url: 'https://github.com/jack1232/WebGPU-Step-By-Step',
     },
   ]
