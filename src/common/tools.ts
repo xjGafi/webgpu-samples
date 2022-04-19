@@ -1,3 +1,8 @@
+export const handleBeforeChange = () => {
+  const messageBox = document.querySelector<HTMLElement>('#message')!;
+  messageBox.style.display = 'none';
+}
+
 export const handleChanged = (githubRepo: string) => {
   const pathname = location.pathname.slice(1);
 

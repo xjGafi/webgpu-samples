@@ -1,7 +1,7 @@
 import initLayout from './layout';
 import routes from "./routes";
 import Router from "./common/router";
-import { handleChanged, showMessage } from "./common/tools";
+import { showMessage, handleBeforeChange, handleChanged } from "./common/tools";
 
 const GITHUB_REPO = 'https://github.com/xjGafi/webgpu-samples';
 
@@ -18,5 +18,8 @@ routes.forEach(route => {
   router.register(path, callback);
 })
 
-// 路由更新后，更新一些动态数据
+// 路由更新前，更新 UI
+router.beforeEach(() => { handleBeforeChange() });
+
+// 路由更新后，更新 UI
 router.afterEach(() => { handleChanged(GITHUB_REPO) });
