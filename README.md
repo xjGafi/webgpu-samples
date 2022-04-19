@@ -23,7 +23,6 @@ npm run dev # or yarn run dev
 ```bash
 ├── LICENSE
 ├── README.md
-├── index.css
 ├── index.html
 ├── package.json
 ├── src
@@ -31,6 +30,9 @@ npm run dev # or yarn run dev
 │   │   ├── router.ts
 │   │   └── tools.ts
 │   ├── main.ts
+│   ├── layout.ts
+│   ├── routes.ts
+│   ├── style.css
 │   ├── pages
 │   │   ├── helloWebgpu.ts
 │   │   ├── basicTriangle.ts
@@ -57,3 +59,7 @@ npm run dev # or yarn run dev
 3. For FireFox Nightly, please open `about:config`, and change `dom.webgpu.enabled` to `true`
 
 Modified base on [orillusion-webgpu-samples](https://github.com/Orillusion/orillusion-webgpu-samples)
+
+## TODO
+
+Page lazy loading

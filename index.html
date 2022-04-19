@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Webgpu Samples</title>
-    <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
     <svg class="hidden">
@@ -14,34 +13,7 @@
         />
       </symbol>
     </svg>
-    <main class="webgpu--container">
-      <aside class="webgpu--aside">
-        <section class="webgpu--aside__header">
-          <h1>WebGPU</h1>
-          <a id="githubRepoLink" target="_blank" data-tag="github">
-            <svg fill="#000">
-              <use xlink:href="#github"></use>
-            </svg>
-          </a>
-        </section>
-        <ul id="menus" class="webgpu--aside__menus"></ul>
-        <p class="webgpu--aside__footer">have fun 🏝</p>
-      </aside>
-      <article class="webgpu--article">
-        <canvas id="sketchpad" class="webgpu--article__sketchpad"></canvas>
-        <section id="message" class="webgpu--article__message"></section>
-        <a
-          id="githubRepoFileLink"
-          class="webgpu--article__github"
-          target="_blank"
-          data-tag="github"
-        >
-          <svg fill="#fff">
-            <use xlink:href="#github"></use>
-          </svg>
-        </a>
-      </article>
-    </main>
+    <main id="app" class="webgpu--container"></main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

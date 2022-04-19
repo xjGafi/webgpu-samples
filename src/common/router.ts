@@ -66,7 +66,7 @@ class Router {
   // 注册每个视图
   async register(path: string, callback: Function) {
     if (typeof callback === 'function') {
-      this.routers[path] = (await callback.call(this)).default;
+      this.routers[path] = callback;
     } else {
       console.error('register(): callback is not a function');
     }
@@ -82,24 +82,6 @@ class Router {
   replace(path: string) {
     history.replaceState({ path }, '', path);
     this.refresh(path);
-  }
-
-  // path 切换之前
-  beforeEach(callback: Function) {
-    if (typeof callback === 'function') {
-      this.beforeHandler = callback;
-    } else {
-      console.error('beforeEach(): callback is not a function');
-    }
-  }
-
-  // path 切换之后
-  afterEach(callback: Function) {
-    if (typeof callback === 'function') {
-      this.afterHandler = callback;
-    } else {
-      console.error('afterEach(): callback is not a function');
-    }
   }
 
   // 通用处理 path 调用回调函数
@@ -122,6 +104,24 @@ class Router {
     } catch (error) {
       console.error('🤯', error);
       (this.routers['error'] || function () { }).call(this, error);
+    }
+  }
+
+  // path 切换之前
+  beforeEach(callback: Function) {
+    if (typeof callback === 'function') {
+      this.beforeHandler = callback;
+    } else {
+      console.error('beforeEach(): callback is not a function');
+    }
+  }
+
+  // path 切换之后
+  afterEach(callback: Function) {
+    if (typeof callback === 'function') {
+      this.afterHandler = callback;
+    } else {
+      console.error('afterEach(): callback is not a function');
     }
   }
 }
