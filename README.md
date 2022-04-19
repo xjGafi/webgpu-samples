@@ -12,10 +12,10 @@ git clone https://github.com/xjGafi/webgpu-samples.git
 cd webgpu-samples
 
 # Start installing dependencies
-npm install #or yarn
+npm install # or yarn
 
 # Run project at localhost:3000
-npm run dev #or yarn run dev
+npm run dev # or yarn run dev
 ```
 
 ## Project Layout
@@ -28,18 +28,15 @@ npm run dev #or yarn run dev
 ├── package.json
 ├── src
 │   ├── common
-│   │   ├── interface.ts
 │   │   ├── router.ts
 │   │   └── tools.ts
 │   ├── main.ts
-│   ├── menu.ts
-│   ├── modules
+│   ├── pages
+│   │   ├── helloWebgpu.ts
 │   │   ├── basicTriangle.ts
 │   │   ├── colorTriangle.ts
-│   │   ├── helloWebgpu.ts
-│   │   ├── one.ts
-│   │   ├── three.ts
-│   │   └── two.ts
+│   │   ├── home.ts
+│   │   └── error.ts
 │   ├── shaders
 │   │   ├── basic.vert.wgsl
 │   │   ├── color.frag.wgsl
@@ -59,4 +56,4 @@ npm run dev #or yarn run dev
 2. For Edge Canary, please open `edge://flags/#enable-unsafe-webgpu`, and enable the flag
 3. For FireFox Nightly, please open `about:config`, and change `dom.webgpu.enabled` to `true`
 
-Forked from [orillusion-webgpu-samples](https://github.com/Orillusion/orillusion-webgpu-samples)
+Modified base on [orillusion-webgpu-samples](https://github.com/Orillusion/orillusion-webgpu-samples)
