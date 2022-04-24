@@ -9,7 +9,7 @@ async function initWebGPU() {
     throw new Error("Not Support WebGPU");
   }
 
-  // 适配器：adapter 是浏览器对 WebGPU 的抽象代理，并不能拿它去操作 GPU 进行绘制或计算
+  // 适配器：adapter 是浏览器对 WebGPU 的抽象代理，不能被 JS 用来操作 GPU 进行绘制或计算
   const adapter = await gpu.requestAdapter({
     // 可选参数，开启高画质
     powerPreference: 'high-performance'
@@ -19,12 +19,12 @@ async function initWebGPU() {
   }
   // console.log('🌈 adapter:', adapter);
 
-  // 设备：需要从 adpater 中请求一个具体的逻辑实例，该实例则是可以被 JS 控制来操作 GPU 的具体对象了
+  // 设备：device 是从 adpater 中申请的一个具体的逻辑实例，能被 JS 用来操作 GPU 进行绘制或计算
   const device = await adapter.requestDevice(
     {
       // 可选参数，添加要申请的功能
       requiredFeatures: ['texture-compression-bc'],
-      // 可选参数，修改允许的Buffer最大值为浏览器允许的最大值
+      // 可选参数，修改允许的 Buffer 最大值为浏览器允许的最大值
       requiredLimits: {
         maxStorageBufferBindingSize: adapter.limits.maxStorageBufferBindingSize
       }
@@ -43,7 +43,7 @@ async function initWebGPU() {
   canvas.style.display = 'block';
   const context = canvas.getContext('webgpu') as GPUCanvasContext;
 
-  // WebGPU 支持非常多的颜色格式，一般直接通过 API 来获取浏览器默认的颜色选项即可
+  // WebGPU 支持非常多的颜色格式，通常推荐使用 API 来获取当前浏览器默认的颜色格式
   // 一般情况下是 'bgra8unorm'，简单来说就是常用的 0-255 的 rgba 排列方式，只不过都将数据以 0-1 的小数作为表示
   const format = context.getPreferredFormat(adapter);
   const devicePixelRatio = window.devicePixelRatio || 1;
@@ -55,11 +55,11 @@ async function initWebGPU() {
   context.configure({
     // 必选参数
     device,
-    // 必选参数，WebGPU 支持非常多的颜色格式，通常推荐使用 API 来获取当前首选的格式比较稳妥
+    // 必选参数
     format,
-    // 可选参数，通常情况下，不会直接使用 canvas 的默认大小，而是会根据 canvas 实际大小来进行设置
+    // 可选参数，使用 canvas 实际大小，避免高清屏模糊问题
     size,
-    // 可选参数，Chrome 102 开始默认为 'opaque' 即不透明选项
+    // 可选参数，Chrome 102 开始默认为 'opaque'，即不透明选项
     compositingAlphaMode: 'opaque'
   });
 
@@ -67,7 +67,7 @@ async function initWebGPU() {
 }
 
 // 初始化并配置 GPU 渲染管线
-async function initPipeline(device: GPUDevice, format: GPUTextureFormat): Promise<GPURenderPipeline> {
+async function initPipeline(device: GPUDevice, format: GPUTextureFormat) {
   // 创建顶点着色器
   const vertexShader = device.createShaderModule({
     code: triangleVert
