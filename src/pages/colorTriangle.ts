@@ -179,7 +179,7 @@ async function initPipeline(device: GPUDevice, format: GPUTextureFormat) {
 }
 
 // 创建、录制 command 队列（绘制）
-function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderPipeline, uniformGroup: GPUBindGroup, vertexBuffer: GPUBuffer) {
+function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderPipeline, vertexBuffer: GPUBuffer, uniformGroup: GPUBindGroup) {
   // 画布
   const view = context.getCurrentTexture().createView();
   // 类似于图层
@@ -215,17 +215,17 @@ function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderP
 }
 
 async function main() {
-
   try {
     // 初始化
     const { device, context, format } = await initWebGPU();
 
     // 配置管线
-    const { pipeline, uniformGroup, colorBuffer, vertexBuffer } = await initPipeline(device, format);
+    const { pipeline, vertexBuffer, colorBuffer, uniformGroup } = await initPipeline(device, format);
 
     // 绘制
-    draw(device, context, pipeline, uniformGroup, vertexBuffer);
+    draw(device, context, pipeline, vertexBuffer, uniformGroup);
 
+    // 控制器
     // 控制图形在 X 轴上移动
     const updateTranslateX = (range: number) => {
       triangle.vertex[0] = 0 + range;
@@ -234,9 +234,8 @@ async function main() {
 
       // 将新的数据写入到 vertex buffer 中并重新绘制当前图形
       device.queue.writeBuffer(vertexBuffer, 0, triangle.vertex);
-      draw(device, context, pipeline, uniformGroup, vertexBuffer);
+      draw(device, context, pipeline, vertexBuffer, uniformGroup);
     }
-
     // 控制图形在 Y 轴上移动
     const updateTranslateY = (range: number) => {
       triangle.vertex[1] = 0.5 + range;
@@ -245,9 +244,8 @@ async function main() {
 
       // 将新的数据写入到 vertex buffer 中并重新绘制当前图形
       device.queue.writeBuffer(vertexBuffer, 0, triangle.vertex);
-      draw(device, context, pipeline, uniformGroup, vertexBuffer);
+      draw(device, context, pipeline, vertexBuffer, uniformGroup);
     }
-
     // 控制图形颜色
     const updateColor = (color: string) => {
       // HEX 转 RGB
@@ -259,19 +257,20 @@ async function main() {
 
       // 将新的数据写入到 vertex buffer 中并重新绘制当前图形
       device.queue.writeBuffer(colorBuffer, 0, colorArray);
-      draw(device, context, pipeline, uniformGroup, vertexBuffer);
+      draw(device, context, pipeline, vertexBuffer, uniformGroup);
     }
-
     // 新增 GUI 控制器
     const gui = new GUI();
+    const controller = document.querySelector<HTMLElement>('#controller')!;
+    controller.appendChild(gui.domElement);
     const settings = {
       translateX: 0,
       translateY: 0,
       color: "#00ff00",
     };
-    gui.add(settings, 'translateX', -0.5, 0.5).step(0.1)
+    gui.add(settings, 'translateX', -0.5, 0.5).step(0.01)
       .onChange(updateTranslateX);
-    gui.add(settings, 'translateY', -0.5, 0.5).step(0.1)
+    gui.add(settings, 'translateY', -0.5, 0.5).step(0.01)
       .onChange(updateTranslateY);
     gui.addColor(settings, 'color')
       .onChange(updateColor);
