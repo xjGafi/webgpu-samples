@@ -14,7 +14,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "removeComments": true,
-    "types": ["@webgpu/types"]
+    "types": ["@webgpu/types", "@types/dat.gui"]
   },
   "include": ["src"]
 }

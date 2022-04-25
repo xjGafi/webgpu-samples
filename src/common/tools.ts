@@ -3,8 +3,9 @@ export const handleBeforeChange = () => {
   const messageBox = document.querySelector<HTMLElement>('#message')!;
   messageBox.style.display = 'none';
 
-  // 清空控制器中元素
-  const controller = document.querySelector<HTMLElement>('#controller')!;
+  // 清空控制器
+  const controller = document.querySelector<HTMLElement>('.dg');
+  if (!controller) return;
   controller.innerHTML = '';
 }
 

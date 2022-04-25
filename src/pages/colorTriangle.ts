@@ -1,3 +1,4 @@
+import { GUI } from 'dat.gui';
 import basicVert from '../shaders/basic.vert.wgsl?raw'
 import colorFrag from '../shaders/color.frag.wgsl?raw'
 import * as triangle from '../util/triangle'
@@ -225,20 +226,8 @@ async function main() {
     // 绘制
     draw(device, context, pipeline, uniformGroup, vertexBuffer);
 
-    // 控制区域
-    const controller = document.querySelector<HTMLElement>('#controller')!;
-    // 位置控制
-    const inputRange = document.createElement("input");
-    inputRange.type = 'range';
-    inputRange.min = '-0.5';
-    inputRange.max = '0.5';
-    inputRange.step = '0.1';
-    inputRange.value = '0';
-    controller.appendChild(inputRange);
-
-    inputRange.addEventListener('input', (e: Event) => {
-      const range = +(e.target as HTMLInputElement).value;
-      // 控制图形仅在 x 轴上移动
+    // 控制图形在 X 轴上移动
+    const updateTranslateX = (range: number) => {
       triangle.vertex[0] = 0 + range;
       triangle.vertex[3] = -0.5 + range;
       triangle.vertex[6] = 0.5 + range;
@@ -246,18 +235,21 @@ async function main() {
       // 将新的数据写入到 vertex buffer 中并重新绘制当前图形
       device.queue.writeBuffer(vertexBuffer, 0, triangle.vertex);
       draw(device, context, pipeline, uniformGroup, vertexBuffer);
-    });
+    }
 
-    // 颜色控制
-    const inputColor = document.createElement("input");
-    inputColor.type = 'color';
-    inputColor.value = '#00ff00'; // 必须是 6 位
-    controller.appendChild(inputColor);
+    // 控制图形在 Y 轴上移动
+    const updateTranslateY = (range: number) => {
+      triangle.vertex[1] = 0.5 + range;
+      triangle.vertex[4] = -0.5 + range;
+      triangle.vertex[7] = -0.5 + range;
 
-    // 颜色改变时，重新绘制
-    inputColor.addEventListener('input', (e: Event) => {
-      // 获取 HEX（十六进制）的色值
-      const color = (e.target as HTMLInputElement).value;
+      // 将新的数据写入到 vertex buffer 中并重新绘制当前图形
+      device.queue.writeBuffer(vertexBuffer, 0, triangle.vertex);
+      draw(device, context, pipeline, uniformGroup, vertexBuffer);
+    }
+
+    // 控制图形颜色
+    const updateColor = (color: string) => {
       // HEX 转 RGB
       const r = +('0x' + color.slice(1, 3));
       const g = +('0x' + color.slice(3, 5));
@@ -268,7 +260,21 @@ async function main() {
       // 将新的数据写入到 vertex buffer 中并重新绘制当前图形
       device.queue.writeBuffer(colorBuffer, 0, colorArray);
       draw(device, context, pipeline, uniformGroup, vertexBuffer);
-    });
+    }
+
+    // 新增 GUI 控制器
+    const gui = new GUI();
+    const settings = {
+      translateX: 0,
+      translateY: 0,
+      color: "#00ff00",
+    };
+    gui.add(settings, 'translateX', -0.5, 0.5).step(0.1)
+      .onChange(updateTranslateX);
+    gui.add(settings, 'translateY', -0.5, 0.5).step(0.1)
+      .onChange(updateTranslateY);
+    gui.addColor(settings, 'color')
+      .onChange(updateColor);
 
   } catch (error: any) {
     console.error('🌈 error:', error);

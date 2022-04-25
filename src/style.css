@@ -121,16 +121,6 @@ a[data-tag='github'] > svg:hover {
   position: absolute;
 }
 
-.webgpu--article__controller {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 .webgpu--article__controller input {
   width: 100%;
 }
@@ -142,4 +132,9 @@ a[data-tag='github'] > svg:hover {
   height: 32px;
   width: 32px;
   z-index: 2;
+}
+
+/* dat.GUI */
+.dg {
+  z-index: 3 !important;
 }
