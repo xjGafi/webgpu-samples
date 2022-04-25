@@ -14,7 +14,7 @@ export const handleChanged = (githubRepo: string) => {
   // 动态设置 a 标签 href
   let githubRepoFile;
   if (pathname) {
-    githubRepoFile = `${githubRepo}/blob/master/src/modules/${pathname}.ts`;
+    githubRepoFile = `${githubRepo}/blob/master/src/pages/${pathname}.ts`;
   } else {
     githubRepoFile = githubRepo;
   }
