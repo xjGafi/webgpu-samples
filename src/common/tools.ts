@@ -1,13 +1,19 @@
+// 路由切换之前执行
 export const handleBeforeChange = () => {
+  // 移除画布样式
+  const sketchpad = document.querySelector<HTMLCanvasElement>('#sketchpad')!;
+  sketchpad.removeAttribute('style');
+
   // 隐藏消息
-  const messageBox = document.querySelector<HTMLElement>('#message')!;
-  messageBox.style.display = 'none';
+  const noticeboard = document.querySelector<HTMLElement>('#noticeboard')!;
+  noticeboard.style.display = 'none';
 
   // 清空控制器
   const controller = document.querySelector<HTMLElement>('#controller')!;
   controller.innerHTML = '';
 }
 
+// 路由切换之后执行
 export const handleChanged = (githubRepo: string) => {
   const pathname = location.pathname.slice(1);
 
@@ -32,12 +38,14 @@ export const handleChanged = (githubRepo: string) => {
   }
 }
 
+// 通用消息提示
 export const showMessage = (message: string) => {
   // 隐藏画板
   const sketchpad = document.querySelector<HTMLCanvasElement>('#sketchpad')!;
   sketchpad.style.display = 'none';
+
   // 显示消息
-  const messageBox = document.querySelector<HTMLElement>('#message')!;
-  messageBox.style.display = 'block';
-  messageBox.innerHTML = message
+  const noticeboard = document.querySelector<HTMLElement>('#noticeboard')!;
+  noticeboard.style.display = 'block';
+  noticeboard.innerHTML = message
 }

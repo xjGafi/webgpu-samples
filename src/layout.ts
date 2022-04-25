@@ -25,7 +25,7 @@ const initLayout = (appId = 'app', githubRepo: string, routes: Array<Menu>) => {
     </aside>
     <article class="webgpu--article">
       <canvas id="sketchpad" class="webgpu--article__sketchpad"></canvas>
-      <section id="message" class="webgpu--article__message"></section>
+      <section id="noticeboard" class="webgpu--article__noticeboard"></section>
       <section id="controller" class="webgpu--article__controller"></section>
       <a
         id="githubRepoFileLink"

@@ -6,7 +6,7 @@ export default function main() {
     },
     {
       label: '📖 W3C - WebGPU',
-      url: 'https://www.w3.org/TR/webgpu/',
+      url: 'https://www.w3.org/TR/webgpu',
     },
     {
       label: '📖 W3C - WebGPU (中文)',
@@ -14,7 +14,7 @@ export default function main() {
     },
     {
       label: '📖 W3C - WGSL',
-      url: 'https://www.w3.org/TR/WGSL/',
+      url: 'https://www.w3.org/TR/WGSL',
     },
     {
       label: '📖 W3C - WGSL (中文)',
@@ -22,7 +22,7 @@ export default function main() {
     },
     {
       label: '📖 W3C - WebGPU Explainer',
-      url: 'https://gpuweb.github.io/gpuweb/explainer/',
+      url: 'https://gpuweb.github.io/gpuweb/explainer',
     },
     {
       label: '📖 W3C - WebGPU Explainer (中文)',
@@ -43,6 +43,10 @@ export default function main() {
     {
       label: '⭐️ GitHub - Jack 老徐: 代码',
       url: 'https://github.com/jack1232/WebGPU-Step-By-Step',
+    },
+    {
+      label: '🍕 GAMES101:现代计算机图形学入门',
+      url: 'https://games-cn.org/intro-graphics',
     },
   ]
 

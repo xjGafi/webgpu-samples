@@ -226,6 +226,11 @@ async function main() {
     draw(device, context, pipeline, vertexBuffer, uniformGroup);
 
     // 控制器
+    // 控制画布边框
+    const updateOutline = (show: boolean) => {
+      const canvas = document.querySelector<HTMLCanvasElement>('#sketchpad')!;
+      canvas.style.outline = show ? '1px solid #fff' : '';
+    }
     // 控制图形在 X 轴上移动
     const updateTranslateX = (range: number) => {
       triangle.vertex[0] = 0 + range;
@@ -263,16 +268,19 @@ async function main() {
     const gui = new GUI();
     const controller = document.querySelector<HTMLElement>('#controller')!;
     controller.appendChild(gui.domElement);
-    const settings = {
+    const options = {
+      showOutline: false,
       translateX: 0,
       translateY: 0,
       color: "#00ff00",
     };
-    gui.add(settings, 'translateX', -0.5, 0.5).step(0.01)
+    gui.add(options, 'showOutline')
+      .onChange(updateOutline);
+    gui.add(options, 'translateX', -0.5, 0.5).step(0.01)
       .onChange(updateTranslateX);
-    gui.add(settings, 'translateY', -0.5, 0.5).step(0.01)
+    gui.add(options, 'translateY', -0.5, 0.5).step(0.01)
       .onChange(updateTranslateY);
-    gui.addColor(settings, 'color')
+    gui.addColor(options, 'color')
       .onChange(updateColor);
 
   } catch (error: any) {

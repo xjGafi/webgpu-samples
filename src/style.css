@@ -117,10 +117,6 @@ a[data-tag='github'] > svg:hover {
   z-index: 1;
 }
 
-.webgpu--article__message {
-  position: absolute;
-}
-
 .webgpu--article__controller {
   position: fixed;
   top: 0;
@@ -130,10 +126,6 @@ a[data-tag='github'] > svg:hover {
 
 .webgpu--article__controller .dg {
   margin-right: 0 !important;
-}
-
-.webgpu--article__controller input {
-  width: 100%;
 }
 
 .webgpu--article__github {
