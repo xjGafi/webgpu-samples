@@ -126,6 +126,13 @@ a[data-tag='github'] > svg:hover {
   top: 20px;
   right: 20px;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.webgpu--article__controller input {
+  width: 100%;
 }
 
 .webgpu--article__github {
