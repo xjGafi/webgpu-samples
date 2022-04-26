@@ -43,9 +43,9 @@ a[data-tag='github'] > svg:hover {
 /* aside */
 .webgpu--aside {
   position: relative;
-  min-width: 200px;
+  min-width: 180px;
   height: 100%;
-  padding: 0 20px;
+  padding: 0 15px;
   border-right: 1px solid #ccc;
   z-index: 2;
 }
@@ -62,7 +62,7 @@ a[data-tag='github'] > svg:hover {
 }
 
 .webgpu--aside__menus {
-  margin: 10px 0;
+  margin: 15px 0;
   padding: 0;
   list-style: none;
   display: flex;
@@ -72,8 +72,8 @@ a[data-tag='github'] > svg:hover {
 
 .webgpu--aside__menus > li {
   cursor: pointer;
-  padding: 8px 10px;
-  border-radius: 20px;
+  line-height: 2;
+  border-radius: 32px;
   text-align: center;
   background: #eee;
 }
@@ -112,8 +112,8 @@ a[data-tag='github'] > svg:hover {
 }
 
 .webgpu--article__sketchpad {
-  width: 600px;
-  height: 600px;
+  width: 700px;
+  height: 700px;
   z-index: 1;
 }
 

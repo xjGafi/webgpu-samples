@@ -1,5 +1,5 @@
 {
-    "recommendations": [
-        "PolyMeilex.wgsl"
-    ]
+  "recommendations": [
+    "wgsl-analyzer.wgsl-analyzer"
+  ]
 }

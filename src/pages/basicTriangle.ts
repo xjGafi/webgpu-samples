@@ -6,7 +6,7 @@ async function initWebGPU() {
   // GPU
   const { gpu } = navigator
   if (!gpu) {
-    throw new Error("Not Support WebGPU");
+    throw new Error("WebGPU is Not Supported");
   }
 
   // 适配器：adapter 是浏览器对 WebGPU 的抽象代理，不能被 JS 用来操作 GPU 进行绘制或计算
