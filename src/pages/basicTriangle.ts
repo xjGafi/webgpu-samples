@@ -1,37 +1,35 @@
-import triangleVert from '../shaders/triangle.vert.wgsl?raw'
-import redFrag from '../shaders/red.frag.wgsl?raw'
+import triangleVert from '../shaders/triangle.vert.wgsl?raw';
+import redFrag from '../shaders/red.frag.wgsl?raw';
 
 // 初始化 WebGPU，配置画布
 async function initWebGPU() {
   // GPU
-  const { gpu } = navigator
+  const { gpu } = navigator;
   if (!gpu) {
-    throw new Error("WebGPU is Not Supported");
+    throw new Error('WebGPU is Not Supported');
   }
 
   // 适配器：adapter 是浏览器对 WebGPU 的抽象代理，不能被 JS 用来操作 GPU 进行绘制或计算
   const adapter = await gpu.requestAdapter({
     // 可选参数，开启高画质
     powerPreference: 'high-performance'
-  })
+  });
   if (!adapter) {
-    throw new Error("Adapter Not Found");
+    throw new Error('Adapter Not Found');
   }
   // console.log('🌈 adapter:', adapter);
 
   // 设备：device 是从 adpater 中申请的一个具体的逻辑实例，能被 JS 用来操作 GPU 进行绘制或计算
-  const device = await adapter.requestDevice(
-    {
-      // 可选参数，添加要申请的功能
-      requiredFeatures: ['texture-compression-bc'],
-      // 可选参数，修改允许的 Buffer 最大值为浏览器允许的最大值
-      requiredLimits: {
-        maxStorageBufferBindingSize: adapter.limits.maxStorageBufferBindingSize
-      }
+  const device = await adapter.requestDevice({
+    // 可选参数，添加要申请的功能
+    requiredFeatures: ['texture-compression-bc'],
+    // 可选参数，修改允许的 Buffer 最大值为浏览器允许的最大值
+    requiredLimits: {
+      maxStorageBufferBindingSize: adapter.limits.maxStorageBufferBindingSize
     }
-  );
+  });
   if (!device) {
-    throw new Error("Device Not Found");
+    throw new Error('Device Not Found');
   }
   // console.log('🌈 device:', device);
 
@@ -101,7 +99,7 @@ async function initPipeline(device: GPUDevice, format: GPUTextureFormat) {
       // 所以这里需要告诉 GPU 管线，在对应的 Shader 中使用的到底是哪种颜色格式，并且这种格式要跟设置画面的格式能够匹配，否则将无法正常显示
       targets: [{ format }]
     }
-  }
+  };
 
   // 渲染管线
   const pipeline = await device.createRenderPipelineAsync(descriptor);
@@ -110,7 +108,11 @@ async function initPipeline(device: GPUDevice, format: GPUTextureFormat) {
 }
 
 // 创建、录制 command 队列（绘制）
-function draw(device: GPUDevice, context: GPUCanvasContext, pipeline: GPURenderPipeline) {
+function draw(
+  device: GPUDevice,
+  context: GPUCanvasContext,
+  pipeline: GPURenderPipeline
+) {
   // 画布
   const view = context.getCurrentTexture().createView();
   // 类似于图层
